@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Kit de Survie JQuery</title>
+    <meta name="description" content="">
+    <link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
+
+    <style>
+        body{ font-family: 'Quicksand', sans-serif; }    	
+	</style>
+
+    <script src="jquery-3.2.1.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // var btn1 = document.querySelector('#btn1');
+            $( "#btn1" ).click(function( event ){
+            event.preventDefault();
+            update1();
+            });
+            $( "#btn2" ).click(function( event ){
+            event.preventDefault();
+            update2();
+            });
+            $( "#btn3" ).click(function( event ){
+            event.preventDefault();
+            update3();
+            });
+            $( "#btn4" ).click(function( event ){
+            event.preventDefault();
+            update4();
+            });
+            $( "#btn5" ).click(function( event ){
+            event.preventDefault();
+            update5();
+            });
+            $( "#btn6" ).click(function( event ){
+            event.preventDefault();
+            update6();
+            });
+            
+            $('#indicator').css("visibility", "hidden");
+
+            function hideIndicator() {
+                $('#indicator').css("visibility", "hidden");
+            }
+
+            // function update(id) {
+            //     $('#indicator').css("visibility", "visible");
+            //     switch (id) {
+            //         case 1: $('#container').load("exo1.html div#conteneur1", hideIndicator());
+            //         case 2: $('#container').load("exo1.html div#conteneur2", hideIndicator());
+            //         case 3: $('#container').load("getFunctions.html", hideIndicator());
+            //         case 4: $('#container').load("exo4.html", hideIndicator());
+            //         case 5: $('#container').load("exo5.html", hideIndicator());
+            //         default:  $('#container').load("exo1.html div#conteneur1", hideIndicator());
+            //     }
+            // }
+
+            function update1() {
+                $('#indicator').css("visibility", "visible");
+                $('#container').load("exo1.html div#conteneur1", hideIndicator());
+            }
+
+            function update2() {
+                $('#indicator').css("visibility", "visible");
+                $('#container').load("exo1.html div#conteneur2", hideIndicator());
+            }
+
+            function update3() {
+                $('#indicator').css("visibility", "visible");
+                $('#container').load("getFunctions.html", hideIndicator());
+            }
+
+            function update4() {
+                $('#indicator').css("visibility", "visible");
+                $('#container').load("exo4.html", hideIndicator());
+            }
+
+            function update5() {
+                $('#indicator').css("visibility", "visible");
+                $('#container').load("exo5.html", hideIndicator());
+            }
+
+            function update6() {
+                $('#indicator').css("visibility", "visible");
+                $('#container').load("exo6.html", hideIndicator());
+            }
+        });
+    </script>
+</head>
+
+    <body>
+        <p>Hello !</p>
+        <div>
+            <input type="button" id="btn1" value="Partie 1" />
+            <input type="button" id="btn2" value="Partie 2" />
+            <input type="button" id="btn3" value="Partie 3" />
+            <input type="button" id="btn4" value="Partie 4" />
+            <input type="button" id="btn5" value="Partie 5" />
+            <input type="button" id="btn6" value="Partie 6" />
+
+        </div>
+        
+        <img id="indicator" src="Loading_icon.gif" alt="Chargement en cours"/>
+        
+        <div id="container"></div>
+    </body>
+
+</html>

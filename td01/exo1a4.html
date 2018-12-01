@@ -1,0 +1,88 @@
+<!-- KIT DE SURVIE JS - IUT INFORMATIQUE BORDEAUX -->
+<!DOCTYPE html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>Exercice 01 à 04</title>
+  <meta name="description" content="Exercice 1 à 2 kit de survie JS">
+</head>
+
+<body>
+  <script>
+    var Personne = {
+      nom: "",
+      prenom: "",
+      dateNaissance: [1, 1, 1977],
+      taille: "",
+      init: function (init_nom, init_prenom, init_date, init_taille) {
+        this.nom = init_nom;
+        this.prenom = init_prenom;
+        this.dateDeNaissance = init_date;
+        this.taille = init_taille;
+      },
+      presenter: function () {
+        console.log(
+          "Je m'appelle " +
+          this.prenom +
+          " " +
+          this.nom +
+          ", je suis né le " +
+          this.dateDeNaissance[0] +
+          "/" +
+          this.dateDeNaissance[1] +
+          "/" +
+          this.dateDeNaissance[2] +
+          " et je mesure " +
+          this.taille +
+          "."
+        );
+      },
+      direAge: function () {
+        var now = new Date();
+        console.log("J'ai " + (now.getFullYear() - this.dateDeNaissance[2]) + " ans.");
+      },
+    };
+
+    var Etudiant = Object.create(Personne); // On crée la référence à l’objet Personne
+    Etudiant.numEtudiant = 0;
+    Etudiant.initEtudiant = function (init_nom, init_prenom, init_date, init_taille, init_numero) {
+      // On appelle la fonction de l’objet Personne
+      this.init(init_nom, init_prenom, init_date, init_taille);
+      this.numEtudiant = init_numero;
+    }
+    Etudiant.presenterEtudiant = function () {
+      this.presenter();
+      console.log("Je suis l'étudiant numéro: " + this.numEtudiant + ".");
+    }
+
+    var Professeur = Object.create(Personne); // On crée la référence à l’objet Personne
+    Professeur.mail = "";
+    Professeur.matiere = "";
+    Professeur.initProfesseur = function (init_nom, init_prenom, init_date, init_taille, init_mail, init_matiere) {
+      // On appelle la fonction de l’objet Personne
+      this.init(init_nom, init_prenom, init_date, init_taille);
+      this.mail = init_mail;
+      this.matiere = init_matiere
+    }
+    Professeur.presenterProfesseur = function () {
+      this.presenter();
+      console.log("Mon adresse mail est: " + this.mail + ".");
+      console.log("Je suis votre prof de " + this.matiere + ".");
+    }
+
+    var bobby = Object.create(Etudiant);
+    bobby.initEtudiant("McDeagle", "Bobby", [06, 09, 1990], "2m00", "1230381");
+    bobby.presenterEtudiant();
+    bobby.direAge();
+
+    var janine = Object.create(Etudiant);
+    janine.initEtudiant("Dupont", "Janine", [01, 03, 1992], "1m20", "1230382");
+    janine.presenterEtudiant();
+    janine.direAge();
+
+    var jack = Object.create(Professeur);
+    jack.initProfesseur("Pouce", "Tom", [14, 12, 1980], "3 pouces", "tom.pouce@gmail.com", "Maths");
+    jack.presenterProfesseur();
+    jack.direAge();
+  </script>
+</body>

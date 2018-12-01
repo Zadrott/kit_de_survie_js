@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html ng-app="app" ng-controller="controlleur01">
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+
+  <style>
+    #colorField{
+      background-color: {{ color }}
+    }
+  </style>
+
+  <body>
+    <h1>Exercice 3</h1>
+
+    <div>
+      <p>
+        Write a color: <input id="colorField" type="text" ng-model="color" />
+      </p>
+    </div>
+
+    <h1>Exercice 4</h1>
+    <div>
+      <p>
+        Enter your first number:
+        <input id="Nb1Field" type="text" ng-model="Nb1" /> <br />
+        Enter your second number:
+        <input id="Nb2Field" type="text" ng-model="Nb2" /> <br />
+        Select an operator :
+        <select ng-model="operator">
+          <option value="+">+</option>
+          <option value="-">-</option>
+          <option value="*">*</option>
+          <option value="/">/</option>
+        </select>
+      </p>
+      <p>
+        {{ Nb1 }} {{ operator }} {{ Nb2 }} = {{ calcul(Nb1, Nb2, operator) }}
+      </p>
+    </div>
+
+    <h1>Exercice 5</h1>
+    <div ng-controller="controlleur02">
+      Hey ! Look at my Pokedex :
+      <ul>
+        <li ng-repeat="x in pokedex">{{ x }}</li>
+      </ul>
+    </div>
+
+    <script>
+      var app = angular.module("app", []);
+      // ex4
+      app.controller("controlleur01", function($scope) {
+        $scope.calcul = (fnb, snb, op) => {
+          switch (op) {
+            case "+":
+              return parseInt(fnb) + parseInt(snb);
+            case "-":
+              return parseInt(fnb) - parseInt(snb);
+            case "*":
+              return parseInt(fnb) * parseInt(snb);
+            case "/":
+              return parseInt(fnb) / parseInt(snb);
+            default:
+              return "";
+          }
+        };
+      });
+
+      // ex5
+      app.controller("controlleur02", function($scope, $http) {
+        $scope.pokedex = [];
+        $http
+          .get(
+            "https://raw.githubusercontent.com/fanzeyi/Pokemon-DB/master/pokedex.json"
+          )
+          .then(function(response) {
+            var listeNom = [];
+            for (pokemon in response.data) {
+              $scope.pokedex.push(response.data[pokemon].ename);
+            }
+          });
+      });
+    </script>
+  </body>
+</html>

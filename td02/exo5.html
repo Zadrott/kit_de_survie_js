@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Kit de Survie JS</title>
+    <meta name="description" content="">
+    <link href="exo5.css" rel="stylesheet">
+    <script type="text/javascript">
+        $(document).ready(function(){
+            var type = $("monselect option:selected");
+            $("#monselect").change(function(changeEvent) {
+                changeEvent.preventDefault();
+                type= $("#monselect ").val();
+
+
+            });
+            $("#submitButton").click(function(e){
+                e.preventDefault();
+                $.getJSON("https://geo.api.gouv.fr/communes?"+ type + "=" + $("#searchTerms").val(), function(data) {
+                    $("#resultList").empty();
+                    data.forEach(result => {
+                        $("#resultList").append("<li>" + result.nom + " ( Code: " + result.code + ", Population: " + result.population + ")</li>");
+                    });
+                });
+            })
+          
+        });
+    </script>
+</head>
+
+<body>
+    <form action="">
+        <select id="monselect">
+            <option value="nom">Nom</option>
+            <option value="codePostal" selected>Code postal</option>
+            <option value="codeDepartement">Code département</option>
+        </select>
+        <input id="searchTerms" type="text"/>
+        <button id="submitButton"> Search</button>
+    </form>
+    <div>
+        <ul id="resultList"></ul>
+    </div>
+
+
+</body>
+
+</html>

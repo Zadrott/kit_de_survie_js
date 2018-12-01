@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+  <head>
+    <script src="jquery-3.2.1.min.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function(){
+        $.getJSON("characters.php", data => {
+          $("#container").append('<ul id="liste"> </ul>');
+          data.forEach(element => {
+            $("#liste").append("<li>", element.name, "</li>");
+          });
+        });
+      });
+    </script>
+  </head>
+  <body> 
+  </body>
+</html>
+
+
