@@ -1,26 +1,82 @@
 <!-- KIT DE SURVIE JS - IUT INFORMATIQUE BORDEAUX -->
 <!DOCTYPE html>
+
 <head>
- 
+
     <meta charset="utf-8" />
- 
+
     <title>Exercice 14</title>
     <meta name="description" content="Description de la page">
     <link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
 
     <style>
-    	body{ font-family: 'Quicksand', sans-serif; }
+        body{ font-family: 'Quicksand', sans-serif; }
 	</style>
 
     <script src="jquery-3.2.1.min.js"></script>
     <script type="text/javascript">
-    	$(document).ready(function(){
-    		// Ecrire les scripts ici
-    	});
-   	</script>
+        $(document).ready(function () {
+
+            //a)	
+            $('body').append('<form action="#"></form>');
+            $('form').append('Nom : <input type="text" name="nom" />');
+            $('input[name="nom"]').after('<br /> Prénom : <input type="text" name="prenom" />');
+            $('input[name="prenom"]').after('<br /> Age : <input type="number" name="age" min="0" max="130" />');
+            $('input[name="age"]').after('<br /> Sexe : <select id="sexeId" name="sexe">  </select>');
+
+            var options = 
+                '<option value="choix">Choisissez une option</option>' +
+                '<option value="féminin">Féminin</option>' +
+                '<option value="masculin">Masculin</option>' +
+                '<option value="autre">Autre</option>';
+
+            $('select').append(options);
+            $('select').after('<br /> Description : <textarea name="description"> </textarea>');
+            $('textarea').after('<br /> <button onclick="getUser(event)" type="submit"> Envoyer </button>');
+            //b)  On l'exécute grâce à l'évènement onclick sur le boutton d'envoi du formulaire 
+
+        });
+
+
+        function getUser(e) {
+            e.preventDefault();
+            var user = [];
+            $('form').children().each(function() {
+                
+                user.push($(this).val());                 // on récupère la valeur de tous les éléments enfants du body et on push dans le tableau user
+            });
+            user = user.filter(element => element != "");                               // on purge le tableau des éléments vides
+            var utilisateur = new User(user[0], user[1], user[2], user[3], user[4]);    // On crée l'objet utilisateur contenant les attributs appropriés
+            utilisateur.afficher();
+        }
+                       
+
+        //c) 
+        function User(nom, prenom, age, sexe, description) {
+            this.nom = nom;
+            this.prenom = prenom;
+            this.age = age;
+            this.sexe = sexe;
+            this.description = description;
+
+            this.afficher = function () {
+                console.log(
+                    "Nom: " + this.nom + "\n" +
+                    "Prénom: " + this.prenom + "\n" +
+                    "Age: " + this.age + "\n" +
+                    "Sexe: " + this.sexe + "\n" +
+                    "Description: " + this.description + "\n" 
+                )                 
+            };
+
+
+
+        }
+    </script>
 </head>
+
 <body>
-	<!-- Formulaire ici -->
+    <!-- Formulaire ici -->
 </body>
- 
+
 </html>

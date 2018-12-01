@@ -1,19 +1,99 @@
 <!DOCTYPE html>
+
 <head>
- 
-    <meta charset="utf-8" />
- 
-    <title>Titre de la page</title>
-    <meta name="description" content="Description de la page">
-    <link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
 
-    <script src="jquery-3.2.1.min.js"></script>
-    <script type="text/javascript">
-    	$(document).ready(function(){
+	<meta charset="utf-8" />
 
-    	});
-   	</script>
+	<title>Titre de la page</title>
+	<meta name="description" content="Description de la page">
+	<link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
+
+	<script src="jquery-3.2.1.min.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function () {
+
+			$elements = [];
+			$('select').children().each(function () {
+				$elements.push($(this).val());
+			});
+
+
+			$('input:submit').click(function (event) {
+				event.preventDefault();
+				$selection = $('select').val();
+				$contenu = $('#contenu').val();
+				$("#recipient").children('#info').empty();
+
+				function ischecked() {
+					return $('#ajoutAvant').prop("checked");
+				}
+
+				function addContent($content) {
+					return ischecked() ? $('#recipientBefore').append($content) : $('#recipient').append($content);
+				}
+
+				$h1 = '<h1>' + $contenu + '</h1>';
+				$h2 = '<h2>' + $contenu + '</h2>';
+				$h3 = '<h3>' + $contenu + '</h3>';
+				$p = '<p>' + $contenu + '</p>';
+				$img = '<img src="' + $contenu + '"> <br />';
+				$a = '<a href="' + $contenu + '" target="_blank"> Lien </a> <br />';
+				$inputText = '<input type="text" placeholder="' + $contenu + '"> <br />';
+				$inputSub = '<button type="submit"> ' + $contenu + '</button> <br />';
+				$label = '<label>' + $contenu + '</label> <br />';
+
+
+				if ($elements.includes($selection)) {
+					switch ($selection) {
+						case 'h1':
+							addContent($h1);
+							break;
+						case 'h2':
+							addContent($h2);
+							break;
+						case 'h3':
+							addContent($h3);
+							break;
+						case 'p':
+							addContent($p);
+							break;
+						case 'img':
+							alert('Veillez à ajouter une URL valide de l\'image dans le champ "contenu"');
+							addContent($img);
+							break;
+						case 'a':
+							addContent($a);
+							break;
+						case 'input:text':
+							addContent($inputText);
+							break;
+						case 'input:submit':
+							addContent($inputSub);
+							break;
+
+						case 'label':
+							addContent($label);
+							break;
+					}
+				}
+			});
+
+			$('input:button:eq(0)').click(function (event) {
+				$('#recipient').empty();		
+				$('#recipientBefore').empty();	
+				$("#recipient").append('<p id="info">La page est vide pour l\'instant...</p>');
+			});
+
+			$('input:button:eq(1)').click(function (event) {
+				alert($('body').html());
+			});
+
+
+		});
+
+	</script>
 </head>
+
 <body>
 	<div id="generateur">
 		<form action="#">
@@ -43,8 +123,12 @@
 		</form>
 	</div>
 
+	<div id="recipientBefore">
+	</div>
+
+
 	<div id="recipient">
-		La page est vide pour l'instant...
+		<p id="info">La page est vide pour l'instant...</p>
 	</div>
 
 
@@ -52,12 +136,12 @@
 
 	<!-- Style -->
 	<style>
-		body{
+		body {
 			font-family: 'Quicksand', sans-serif;
 			background-color: #FCFCFC;
 		}
 
-		#generateur{
+		#generateur {
 			float: right;
 			border: 1px solid #C1C2CC;
 			padding: 15px;
@@ -65,20 +149,55 @@
 			background: #F1F1F1;
 		}
 
-		#generateur label{ font-weight: bold;}
-		#generateur select{ margin-bottom: 10px; width: 200px; border: 1px solid #666; }
-		#generateur input[type=text]{ margin-bottom: 10px; width: 188px; border: 1px solid #666; padding: 5px; border-radius: 3px;}
-		#generateur input[type=checkbox]{ margin-bottom: 10px; }
+		#generateur label {
+			font-weight: bold;
+		}
 
-		#generateur input[type=submit]{ background-color: #83D833; }
-		#generateur input[type=button]{ background-color: #E80612; }
-		#generateur input[type=button]:last-child{ background-color: #FCC325; }
+		#generateur select {
+			margin-bottom: 10px;
+			width: 200px;
+			border: 1px solid #666;
+		}
+
+		#generateur input[type=text] {
+			margin-bottom: 10px;
+			width: 188px;
+			border: 1px solid #666;
+			padding: 5px;
+			border-radius: 3px;
+		}
+
+		#generateur input[type=checkbox] {
+			margin-bottom: 10px;
+		}
+
+		#generateur input[type=submit] {
+			background-color: #83D833;
+		}
+
+		#generateur input[type=button] {
+			background-color: #E80612;
+		}
+
+		#generateur input[type=button]:last-child {
+			background-color: #FCC325;
+		}
+
 		#generateur input[type=submit],
-		#generateur input[type=button]{ color: white; border-radius: 3px; border: none; padding: 9px;}
-		#generateur input[type=submit]:hover,
-		#generateur input[type=button]:hover{ opacity: 0.7; cursor: pointer;}
+		#generateur input[type=button] {
+			color: white;
+			border-radius: 3px;
+			border: none;
+			padding: 9px;
+		}
 
-		#recipient{
+		#generateur input[type=submit]:hover,
+		#generateur input[type=button]:hover {
+			opacity: 0.7;
+			cursor: pointer;
+		}
+
+		#recipient {
 			margin-right: 250px;
 			padding: 15px;
 			border-radius: 3px;
@@ -86,5 +205,5 @@
 		}
 	</style>
 </body>
- 
+
 </html>
