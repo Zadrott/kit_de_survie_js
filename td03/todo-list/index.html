@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html ng-app="todoApp">
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.5/angular.min.js"></script>
+    <script src="external/jquery/jquery.js"></script>
+    <script src="jquery-ui.min.js"></script>
+    <script src="todo-list/todo.js"></script>
+    <script>
+      $(function() {
+        $("#todo").sortable();
+      });
+    </script>
+
+    <style>
+      .done-true {
+        color: green;
+      }
+      .done-false {
+        color: rgb(200, 0, 0); 
+        font-weight: 600;
+      }
+    </style>
+  </head>
+  
+  <body>
+    <h1>Bienvenue sur votre TodoList.</h1>
+    <div ng-controller="TodoListController as todoList">
+        <p>Il vous reste {{todoList.remaining()}} choses à faire sur un total de {{todoList.todos.length}}.</p>
+        <h2>Todo :</h2>
+        <ul id="todo">
+          <li ng-repeat="todo in todoList.todos">
+            <div>
+              <input type="checkbox" ng-model="todo.done">
+              <span class="done-{{todo.done}}">{{todo.text}} </span>
+              <input type="button" ng-click="todoList.deleteTodo(todo)" value="Supprimer">
+            </div>
+          </li>
+        </ul>
+        <form ng-submit="todoList.addTodo()">
+          <input type="text" ng-model="todoList.todoText"
+                 placeholder="Ajouter une nouvelle tache">
+          <input type="submit" value="Ajouter">
+        </form>
+      </div>
+    </div>
+  </body>
+</html>
