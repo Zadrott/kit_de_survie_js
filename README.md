@@ -19,4 +19,5 @@ Les exos sont tous accessibles dans les différents onglets
 ## Pour le TD 3:
 
 http://localhost:[your_php_port]/td03/partie1  
-http://localhost:[your_php_port]/td03/partie2
+http://localhost:[your_php_port]/td03/partie2  
+http://localhost:[your_php_port]/td03/todo-list    
