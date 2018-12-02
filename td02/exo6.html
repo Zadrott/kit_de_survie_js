@@ -34,15 +34,22 @@
     <script src="jquery-3.2.1.min.js"></script>
     <script type="text/javascript">
     	$(document).ready(function(){
-    		// Ecrire les scripts ici
+    		$("#submitButton").click(function (e) {
+				e.preventDefault();				
+				$.getJSON("https://www.metaweather.com//api/location/search/?query=" + $("#searchTerms").val(), function (data) {
+					console.log(data);
+					// var result = data[0];
+					// error CORS policy ????????
+				});
+			})
     	});
    	</script>
 </head>
 <body>
 	<div class="leftPanel">
 		<form action="#">
-			<input type="text" name="search" placeholder="Bordeaux, London ..." />
-			<input type="submit" value="Rechercher" />
+			<input id="searchTerms" type="text" name="search" placeholder="Bordeaux, London ..." />
+			<input id="submitButton" type="submit" value="Rechercher" />
 		</form>
 		Résultats:
 		<ul>

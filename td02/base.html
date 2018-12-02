@@ -38,6 +38,10 @@
             event.preventDefault();
             update6();
             });
+            $( "#btn7" ).click(function( event ){
+            event.preventDefault();
+            update7();
+            });
             
             $('#indicator').css("visibility", "hidden");
 
@@ -86,6 +90,11 @@
                 $('#indicator').css("visibility", "visible");
                 $('#container').load("exo6.html", hideIndicator());
             }
+
+            function update7() {
+                $('#indicator').css("visibility", "visible");
+                $('#container').load("exo7.html", hideIndicator());
+            }
         });
     </script>
 </head>
@@ -99,6 +108,7 @@
             <input type="button" id="btn4" value="Partie 4" />
             <input type="button" id="btn5" value="Partie 5" />
             <input type="button" id="btn6" value="Partie 6" />
+            <input type="button" id="btn7" value="Partie 7" />
 
         </div>
         
