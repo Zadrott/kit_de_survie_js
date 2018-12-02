@@ -9,6 +9,10 @@
       $(function() {
         $("#todo").sortable();
       });
+
+      // $("#todo").change(()=>{
+      //   localStorage.todos = todoList.todos;
+      // })
     </script>
 
     <style>
@@ -21,7 +25,7 @@
       }
     </style>
   </head>
-  
+
   <body>
     <h1>Bienvenue sur votre TodoList.</h1>
     <div ng-controller="TodoListController as todoList">

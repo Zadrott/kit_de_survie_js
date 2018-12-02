@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html ng-app="app" ng-controller="controlleur01">
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
-
-  <style>
-    #colorField{
-      background-color: {{ color }}
-    }
-  </style>
-
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+  </head>
   <body>
     <h1>Exercice 3</h1>
 
     <div>
       <p>
-        Write a color: <input id="colorField" type="text" ng-model="color" />
+        Write a color:
+        <input
+          type="text"
+          ng-model="color"
+          style="background-color: {{ color }}"
+        />
       </p>
     </div>
 

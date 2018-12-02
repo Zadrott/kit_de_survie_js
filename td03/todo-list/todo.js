@@ -1,5 +1,19 @@
 angular.module("todoApp", []).controller("TodoListController", function() {
   var todoList = this;
+  // if (!localStorage.todos) {
+  //   localStorage.todos = [
+  //     { text: "Exercice 1", done: true },
+  //     { text: "Exercice 2", done: false },
+  //     { text: "Exercice 3", done: true },
+  //     { text: "Exercice 4", done: true },
+  //     { text: "Exercice 5", done: true },
+  //     { text: "Exercice 6", done: false },
+  //     { text: "Exercice 7", done: false },
+  //     { text: "Exercice 8", done: true },
+  //   ];
+  // }
+  // todoList.todos = localStorage.todos;
+  // console.log(localStorage.todos);
   todoList.todos = [
     { text: "Exercice 1", done: true },
     { text: "Exercice 2", done: false },
