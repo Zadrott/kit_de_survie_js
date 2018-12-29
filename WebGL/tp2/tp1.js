@@ -173,11 +173,9 @@ function initEvent() {
 }
 
 function animate() {
-  for (var i = 0; i < 10; i++) {
-    angle += -0.1 * time;
-    gl.uniform1f(rotation, angle);
-    draw();
-  }
+  angle += time / 100;
+  gl.uniform1f(rotation, angle);
+  draw();
   requestAnimationFrame(animate);
 }
 
