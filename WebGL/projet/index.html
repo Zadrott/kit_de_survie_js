@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="us">
+  <head>
+    <meta charset="utf-8" />
+    <title>Projet WebGL</title>
+    <link rel="stylesheet" href="index.css" />
+  </head>
+  <body onload="main()">
+    <div class="container">
+      <div class="content">
+        <canvas id="dawin-webgl" width="800" height="800">
+          Utilisez un navigateur compatible avec WebGL
+        </canvas>
+      </div>
+
+      <div class="content setup">
+        <h2>Translation</h2>
+        <div class="slidecontainer">
+          tx:
+          <input
+            type="range"
+            min="-10"
+            max="10"
+            value="0"
+            class="slider"
+            id="tx"
+          />
+        </div>
+        <div class="slidecontainer">
+          ty:
+          <input
+            type="range"
+            min="-10"
+            max="10"
+            value="0"
+            class="slider"
+            id="ty"
+          />
+        </div>
+        <div class="slidecontainer">
+          tz:
+          <input
+            type="range"
+            min="-10"
+            max="10"
+            value="0"
+            class="slider"
+            id="tz"
+          />
+        </div>
+        <h2>Rotation</h2>
+        <div class="slidecontainer">
+          rx:
+          <input
+            type="range"
+            min="-3.14159265358979"
+            max="3.14159265358979"
+            value="0"
+            class="slider"
+            id="rx"
+          />
+        </div>
+        <div class="slidecontainer">
+          ry:
+          <input
+            type="range"
+            min="-3.14159265358979"
+            max="3.14159265358979"
+            value="0"
+            class="slider"
+            id="ry"
+          />
+        </div>
+        <div class="slidecontainer">
+          rz:
+          <input
+            type="range"
+            min="-3.14159265358979"
+            max="3.14159265358979"
+            value="0"
+            class="slider"
+            id="rz"
+          />
+        </div>
+
+        <h2>Camera</h2>
+        <div class="slidecontainer">
+          zoom:
+          <input
+            type="range"
+            min="0.1"
+            max="5"
+            value="0.9"
+            class="slider"
+            id="zoom"
+          />
+        </div>
+        <div class="slidecontainer">
+          perspective:
+          <input
+            type="range"
+            min="30"
+            max="120"
+            value="90"
+            class="slider"
+            id="perspective"
+          />
+        </div>
+
+        <h2>Color ?</h2>
+      </div>
+    </div>
+
+    <script src="glmatrix.js"></script>
+    <script src="index.js"></script>
+  </body>
+</html>
