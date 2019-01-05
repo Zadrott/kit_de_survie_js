@@ -19,18 +19,14 @@ var vertexShader;
 var fragmentShader;
 var points = []; //contain all points to draw
 var colorsArray = [];
-var translate = [0, 0]; //contain translation to apply
-var zoomFactor = 1;
-var angle = 0;
 var pos; //position adress
 var color; //color adress
-var translation; //translation adress
-var zoom;
-var rotation;
 var posBuffer;
 var colorBuffer;
-// var time = 0;
 var matLoc;
+var translationLoc;
+var rotationLoc;
+var rotation;
 
 function initContext() {
   canvas = document.getElementById("dawin-webgl");
@@ -40,7 +36,7 @@ function initContext() {
     return;
   }
   gl.clearColor(0, 0, 0, 1);
-  gl.clear(gl.COLOR_BUFFER_BIT);
+  gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 }
 
 //Initialisation des shaders et du program
@@ -86,26 +82,16 @@ function initAttributes() {
   color = gl.getAttribLocation(program, "color");
   gl.enableVertexAttribArray(color);
 
-  translation = gl.getUniformLocation(program, "translation");
-  gl.enableVertexAttribArray(translation);
-  gl.uniform2f(translation, translate[0], translate[1]);
-
-  zoom = gl.getUniformLocation(program, "zoom");
-  gl.enableVertexAttribArray(zoom);
-  gl.uniform1f(zoom, zoomFactor);
-
-  rotation = gl.getUniformLocation(program, "angle");
-  gl.enableVertexAttribArray(rotation);
-  gl.uniform1f(rotation, angle);
-
-  matLoc = gl.getUniformLocation(program, "matrix");
+  matLoc = gl.getUniformLocation(program, "model");
+  translationLoc = gl.getUniformLocation(program, "translation");
+  rotationLoc = gl.getUniformLocation(program, "rotation");
 }
 
 function initBuffer() {
   posBuffer = gl.createBuffer();
   gl.bindBuffer(gl.ARRAY_BUFFER, posBuffer);
 }
-
+0;
 function refreshBuffer(source) {
   gl.bindBuffer(gl.ARRAY_BUFFER, posBuffer);
   gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(source), gl.STATIC_DRAW);
@@ -125,27 +111,145 @@ function initColors() {
 }
 
 function troisD() {
-  var matrix = mat4.create();
-  var out = matrix;
-  var fovy = 0.5;
+  var model = mat4.create();
+  var translation = mat4.create();
+  mat4.identity(translation);
+  mat4.translate(translation, translation, [0, 0, -2]);
+
+  rotation = mat4.create();
+  mat4.identity(rotation);
+  mat4.rotateY(rotation, rotation, 0.4);
+  mat4.rotateX(rotation, rotation, -0.8);
+
+  var out = model;
+  var fovy = 0.9;
   var aspect = 1;
   var near = 0.1;
   var far = 100;
   mat4.perspective(out, fovy, aspect, near, far);
-  gl.uniformMatrix4fv(matLoc, false, matrix);
-}
 
-function triangle() {
-  gl.drawArrays(gl.TRIANGLES, 0, points.length / 3);
+  gl.uniformMatrix4fv(matLoc, false, model);
+  gl.uniformMatrix4fv(translationLoc, false, translation);
+  gl.uniformMatrix4fv(rotationLoc, false, rotation);
+  gl.enable(gl.DEPTH_TEST);
 }
 
 //Fonction permettant le dessin dans le canvas
 function draw() {
-  triangle();
+  gl.drawArrays(gl.TRIANGLES, 0, points.length / 3);
 }
 
 function main() {
-  points = [-0.2, -0.2, -1, 0, 0.2, -1, 0.2, -0.2, -10];
+  points = [
+    -0.2,
+    0.2,
+    0,
+    0.2,
+    0.2,
+    0,
+    0.2,
+    -0.2,
+    0,
+    -0.2,
+    0.2,
+    0,
+    -0.2,
+    -0.2,
+    0,
+    0.2,
+    -0.2,
+    0,
+    -0.2,
+    -0.2,
+    -0.4,
+    -0.2,
+    -0.2,
+    0,
+    0.2,
+    -0.2,
+    0,
+    -0.2,
+    -0.2,
+    -0.4,
+    0.2,
+    -0.2,
+    -0.4,
+    0.2,
+    -0.2,
+    0,
+    -0.2,
+    0.2,
+    0,
+    -0.2,
+    0.2,
+    -0.4,
+    -0.2,
+    -0.2,
+    -0.4,
+    -0.2,
+    0.2,
+    0,
+    -0.2,
+    -0.2,
+    0,
+    -0.2,
+    -0.2,
+    -0.4,
+    -0.2,
+    0.2,
+    -0.4,
+    0.2,
+    0.2,
+    -0.4,
+    0.2,
+    -0.2,
+    -0.4,
+    -0.2,
+    0.2,
+    -0.4,
+    -0.2,
+    -0.2,
+    -0.4,
+    0.2,
+    -0.2,
+    -0.4,
+    0.2,
+    0.2,
+    0,
+    0.2,
+    0.2,
+    -0.4,
+    0.2,
+    -0.2,
+    -0.4,
+    0.2,
+    0.2,
+    0,
+    0.2,
+    -0.2,
+    0,
+    0.2,
+    -0.2,
+    -0.4,
+    -0.2,
+    0.2,
+    0,
+    0.2,
+    0.2,
+    0,
+    0.2,
+    0.2,
+    -0.4,
+    -0.2,
+    0.2,
+    0,
+    -0.2,
+    0.2,
+    -0.4,
+    0.2,
+    0.2,
+    -0.4,
+  ];
   initContext();
   initShaders();
   initProgram();
@@ -153,9 +257,7 @@ function main() {
   initBuffer();
   initColors();
   refreshBuffer(points);
-
   troisD();
-
   draw();
   debugShaders();
 }
