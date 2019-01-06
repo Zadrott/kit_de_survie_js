@@ -23,12 +23,22 @@ var pos; //position adress
 var color; //color adress
 var posBuffer;
 var colorBuffer;
-var matLoc;
+var modelLoc;
 var translationLoc;
+var translation;
 var rotationLoc;
 var rotation;
-var time = 0;
-var angle = 0;
+var model;
+const aspect = 1;
+const near = 0.1;
+const far = 100;
+var rx = 0;
+var ry = 0;
+var rz = 0;
+var tx = 0;
+var ty = 0;
+var tz = 0;
+var fovy = 0.9;
 
 function initContext() {
   canvas = document.getElementById("dawin-webgl");
@@ -80,20 +90,18 @@ function debugShaders() {
 function initAttributes() {
   pos = gl.getAttribLocation(program, "position");
   gl.enableVertexAttribArray(pos);
-
   color = gl.getAttribLocation(program, "color");
   gl.enableVertexAttribArray(color);
-
-  matLoc = gl.getUniformLocation(program, "model");
+  modelLoc = gl.getUniformLocation(program, "model");
   translationLoc = gl.getUniformLocation(program, "translation");
   rotationLoc = gl.getUniformLocation(program, "rotation");
 }
 
 function initBuffer() {
   posBuffer = gl.createBuffer();
-  gl.bindBuffer(gl.ARRAY_BUFFER, posBuffer);
+  colorBuffer = gl.createBuffer();
 }
-0;
+
 function refreshBuffer(source) {
   gl.bindBuffer(gl.ARRAY_BUFFER, posBuffer);
   gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(source), gl.STATIC_DRAW);
@@ -101,7 +109,6 @@ function refreshBuffer(source) {
 }
 
 function initColors() {
-  colorBuffer = gl.createBuffer();
   gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
   points.forEach((item, index) => {
     if (index % 2 == 1) {
@@ -112,40 +119,57 @@ function initColors() {
   gl.vertexAttribPointer(color, 4, gl.FLOAT, true, 0, 0);
 }
 
-function troisD() {
-  var model = mat4.create();
-  var translation = mat4.create();
-  mat4.identity(translation);
-  mat4.translate(translation, translation, [0, 0, -1]);
-
-  rotation = mat4.create();
-  mat4.identity(rotation);
-  mat4.rotateY(rotation, rotation, 0.5);
-
-  var out = model;
-  var fovy = 0.9;
-  var aspect = 1;
-  var near = 0.1;
-  var far = 100;
-  mat4.perspective(out, fovy, aspect, near, far);
-
-  gl.uniformMatrix4fv(matLoc, false, model);
-  gl.uniformMatrix4fv(translationLoc, false, translation);
-  gl.uniformMatrix4fv(rotationLoc, false, rotation);
+function rxChange(val) {
+  rx = val;
+  draw();
 }
 
-function animate() {
-  for (var i = 0; i < 10; i++) {
-    angle += -0.1 * time;
-    mat4.rotateY(rotation, rotation, angle);
-    gl.uniformMatrix4fv(rotationLoc, false, rotation);
-    draw();
-  }
-  requestAnimationFrame(animate);
+function ryChange(val) {
+  ry = val;
+  draw();
+}
+
+function rzChange(val) {
+  rz = val;
+  draw();
+}
+
+function txChange(val) {
+  tx = val * 0.1;
+  draw();
+}
+
+function tyChange(val) {
+  ty = val * 0.1;
+  draw();
+}
+
+function tzChange(val) {
+  tz = val * 0.1;
+  draw();
+}
+
+function fovyChange(val) {
+  fovy = val * (3.14159265358979 / 180);
+  draw();
 }
 
 //Fonction permettant le dessin dans le canvas
 function draw() {
+  model = mat4.create();
+  rotation = mat4.create();
+  translation = mat4.create();
+  mat4.perspective(model, fovy, aspect, near, far);
+  mat4.identity(rotation);
+  mat4.identity(translation);
+  mat4.rotate(rotation, rotation, rx, [1, 0, 0]);
+  mat4.rotate(rotation, rotation, ry, [0, 1, 0]);
+  mat4.rotate(rotation, rotation, rz, [0, 0, 1]);
+  mat4.translate(translation, translation, [0, 0, -1]);
+  mat4.translate(translation, translation, [tx, ty, tz]);
+  gl.uniformMatrix4fv(translationLoc, false, translation);
+  gl.uniformMatrix4fv(rotationLoc, false, rotation);
+  gl.uniformMatrix4fv(modelLoc, false, model);
   gl.drawArrays(gl.TRIANGLE_FAN, 0, points.length / 3);
 }
 
@@ -158,8 +182,6 @@ function main() {
   initBuffer();
   initColors();
   refreshBuffer(points);
-  troisD();
   draw();
-  requestAnimationFrame(animate);
   debugShaders();
 }
